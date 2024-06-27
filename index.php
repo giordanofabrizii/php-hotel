@@ -3,8 +3,8 @@
     require_once __DIR__. '/hotels.php';
 
     $parking = isset($_POST['parking']) ? $_POST['parking'] : '';
+    $vote = isset($_POST['vote']) && $_POST['vote'] >= 1 && $_POST['vote'] <= 5 ? $_POST['vote'] : '';
     
-    echo $parking;
     // Descrizione
     // Partiamo da questo array di hotel: https://www.codepile.net/pile/OEWY7Q1G 
     // Milestone 1
@@ -50,6 +50,14 @@
                 </label>
             </section>
 
+            <!-- Vote -->
+            <section class="mb-2">
+                <input type="text" name="vote" id="vote">
+                <label for="vote"> <?php if (isset($_POST['vote']) && ($_POST['vote'] < 1 || $_POST['vote'] > 5)) {
+                    echo '<p class="text-danger">Please insert a number between 1 and 5</p>';
+                } ?> </label>
+            </section>
+
             <button class="btn btn-danger" type="submit">Submit</button>
         </form>
 
@@ -65,7 +73,7 @@
             </thead>
             <tbody>
                 <?php foreach($hotels as $hotel) { ?>
-                    <?php if ($parking === '' || $hotel['parking'] == ($parking === 'true')) { ?>
+                    <?php if (($parking === '' || $hotel['parking'] == ($parking === 'true'))  && ($vote === '' || $hotel['vote'] >= $vote)) { ?>
                         <tr>
                             <td> <?php echo $hotel['name']; ?> </td>
                             <td> <?php echo $hotel['description']; ?> </td>
