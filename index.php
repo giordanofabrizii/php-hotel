@@ -24,16 +24,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Php hotels</title>
+    <!-- Bootstrap v 5.3.3-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
     <main>
-        <?php foreach($hotels as $hotel) { ?>
-            <h1> <?php echo $hotel['name']; ?> </h1>
-            <h2> <?php echo $hotel['description']; ?> </h2>
-            <p>Il parcheggio <?php if ($hotel['parking'] == false) { echo 'non';}; ?> &egrave; disponibile </p>
-            <p>Il suo voto e' <?php echo $hotel['vote']; ?></p>
-            <p>&Egrave; distante <?php echo $hotel['distance_to_center'] ?> km dal centro</p>
-        <?php } ?>
+        <table class="table container-fluid">
+            <thead>
+                <tr>
+                    <th scope="col" class="w-25">Name</th>
+                    <th scope="col">Description</th>
+                    <th class="text-center" scope="col">Available Parking</th>
+                    <th class="text-center" scope="col">Vote</th>
+                    <th class="text-center" scope="col">Distance to center</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($hotels as $hotel) { ?>
+                    <tr>
+                        <td> <?php echo $hotel['name']; ?> </td>
+                        <td> <?php echo $hotel['description']; ?> </td>
+                        <td class="text-center"><?php if ($hotel['parking'] == false) { echo 'No';} else { echo 'Yes';}; ?></td>
+                        <td class="text-center"><?php echo $hotel['vote']; ?></td>
+                        <td class="text-center"><?php echo $hotel['distance_to_center'] ?> km</td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
     </main>
 </body>
 </html>
