@@ -1,7 +1,10 @@
 <?php 
 
-    require_once __DIR__. '/hotels.php'
+    require_once __DIR__. '/hotels.php';
 
+    $parking = isset($_POST['parking']) ? $_POST['parking'] : '';
+    
+    echo $parking;
     // Descrizione
     // Partiamo da questo array di hotel: https://www.codepile.net/pile/OEWY7Q1G 
     // Milestone 1
@@ -28,8 +31,29 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-    <main>
-        <table class="table container-fluid">
+    <main class="p-2">
+        <form action="./index.php" method="post" class="mb-3">
+            <!-- Parking lot -->
+            <section class="flex align-items-center mb-2">
+                <h3>Do you need the parking lot?</h3>
+                <input class="form-check-input" type="radio" name="parking" id="parking1" value="true">
+                <label class="form-check-label" for="parking1">
+                    Yes
+                </label>
+                <input class="form-check-input" type="radio" name="parking" id="parking2" value="false">
+                <label class="form-check-label" for="parking2">
+                    No
+                </label>
+                <input class="form-check-input" type="radio" name="parking" id="parking2" value="">
+                <label class="form-check-label" for="parking2">
+                    No preferences
+                </label>
+            </section>
+
+            <button class="btn btn-danger" type="submit">Submit</button>
+        </form>
+
+        <table class="table table-dark table-striped container-fluid">
             <thead>
                 <tr>
                     <th scope="col" class="w-25">Name</th>
@@ -41,14 +65,15 @@
             </thead>
             <tbody>
                 <?php foreach($hotels as $hotel) { ?>
-                    <tr>
-                        <td> <?php echo $hotel['name']; ?> </td>
-                        <td> <?php echo $hotel['description']; ?> </td>
-                        <td class="text-center"><?php if ($hotel['parking'] == false) { echo 'No';} else { echo 'Yes';}; ?></td>
-                        <td class="text-center"><?php echo $hotel['vote']; ?></td>
-                        <td class="text-center"><?php echo $hotel['distance_to_center'] ?> km</td>
-                    </tr>
-                <?php } ?>
+                    <?php if ($parking === '' || $hotel['parking'] == ($parking === 'true')) { ?>
+                        <tr>
+                            <td> <?php echo $hotel['name']; ?> </td>
+                            <td> <?php echo $hotel['description']; ?> </td>
+                            <td class="text-center"><?php if ($hotel['parking'] == false) { echo 'No';} else { echo 'Yes';}; ?></td>
+                            <td class="text-center"><?php echo $hotel['vote']; ?></td>
+                            <td class="text-center"><?php echo $hotel['distance_to_center'] ?> km</td>
+                        </tr>
+                <?php }} ?>
             </tbody>
         </table>
     </main>
